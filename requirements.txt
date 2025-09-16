@@ -1,0 +1,6 @@
+streamlit
+pandas
+pathlib
+math
+plotly.graph_objects
+plotly.express
