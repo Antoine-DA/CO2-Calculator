@@ -48,12 +48,13 @@ L’application a été développée avec les technologies Python suivantes :
 
 ## Structure du projet
 
-calculateur_CO2/
+'''calculateur_CO2/
 ├─ streamlit_app.py # Point d'entrée principal
 ├─ pages/ # Pages supplémentaires Streamlit
 ├─ data/ # Fichiers de données
 ├─ utils.py # Fonctions utilitaires partagées
 ├─ requirements.txt # Dépendances Python
 ├─ .streamlit/ # Configuration Streamlit
-└─ README.md # Documentation
+└─ README.md # Documentation'''
+
 
