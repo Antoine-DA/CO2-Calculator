@@ -57,5 +57,3 @@ calculateur_CO2/
 ├─ .streamlit/ # Configuration Streamlit
 └─ README.md # Documentation
 
-yaml
-Copier le code
