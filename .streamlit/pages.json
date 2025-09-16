@@ -1,0 +1,17 @@
+[
+    {
+        "file": "streamlit_app.py",
+        "title": "Présentation",
+        "icon": "🏠"
+    },
+    {
+        "file": "pages/1_calculator.py",
+        "title": "Calculateur",
+        "icon": "🧮"
+    },
+    {
+        "file": "pages/2_to_go_further.py",
+        "title": "Allez plus loin",
+        "icon": "🚀"
+    }
+]

@@ -1,0 +1,54 @@
+,cat,subcat,Label,CO2,unité
+0,Alimentaire,Légumes,Asperge,2.0,kg
+1,Alimentaire,Légumes,Champignon,1.55,kg
+2,Alimentaire,Légumes,Concombre,1.43,kg
+3,Alimentaire,Légumes,Aubergine,1.0,kg
+4,Alimentaire,Légumes,Poivron,0.93,kg
+5,Alimentaire,Légumes,Olive,0.91,kg
+6,Alimentaire,Légumes,Céleri,0.85,kg
+7,Alimentaire,Légumes,Courge,0.78,kg
+8,Alimentaire,Légumes,Navet,0.78,kg
+9,Alimentaire,Légumes,Haricot vert,0.75,kg
+10,Alimentaire,Légumes,Pomme de Terre,0.64,kg
+11,Alimentaire,Légumes,Courgette,0.62,kg
+12,Alimentaire,Légumes,Radis,0.59,kg
+13,Alimentaire,Légumes,Chou-fleur,0.57,kg
+14,Alimentaire,Légumes,Oignon,0.54,kg
+15,Alimentaire,Légumes,Artichaut,0.53,kg
+16,Alimentaire,Légumes,Salade,0.53,kg
+17,Alimentaire,Légumes,Brocolis,0.45,kg
+18,Alimentaire,Légumes,Tomate,0.4,kg
+19,Alimentaire,Légumes,Epinard,0.35,kg
+20,Alimentaire,Légumes,Carotte,0.31,kg
+21,Alimentaire,Légumes,Betterave,0.28,kg
+22,Alimentaire,Légumes,Petits pois,0.28,kg
+23,Alimentaire,Boisson,Vin,1.27,l
+24,Alimentaire,Boisson,Café,0.64,l
+25,Alimentaire,Boisson,Bière,1.35,l
+26,Alimentaire,Boisson,Soda,0.49,l
+27,Alimentaire,Viande,Bœuf,28.0,kg
+28,Alimentaire,Viande,Veau,22.5,kg
+29,Alimentaire,Viande,Porc,6.67,kg
+30,Alimentaire,Viande,Poulet,4.56,kg
+31,Alimentaire,Poisson,Crevettes,20.3,kg
+32,Alimentaire,Poisson,Cabillaud,12.1,kg
+33,Alimentaire,Poisson,Moules,5.33,kg
+34,Alimentaire,Poisson,Thon,4.98,kg
+35,Textile,Haut,Tee-shirt coton,6.43,u
+36,Textile,Haut,Chemise,13.2,u
+37,Textile,Bas,Jeans,25.1,u
+38,Textile,Haut,Pull en laine,56.7,u
+39,Textile,Bas,Chaussures de sport,20.1,u
+40,Numérique,Appareil,Tablette,61.9,u
+41,Numérique,Appareil,Smartphone ,85.9,u
+42,Numérique,Appareil,Ordinateur portable,193.0,u
+43,Numérique,Appareil,Ordinateur fixe,299.0,u
+44,Numérique,Appareil,Télévision,472.0,u
+45,Numérique,Streaming,Intégrale de Game of Thrones,2.3133, 
+46,Transport,En commun,Métro,0.0044,km
+47,Transport,Individuel,Trotinette électrique,0.0249,km
+48,Transport,Individuel,Voiture électrique,0.103,km
+49,Electroménager,Petit,Lave-linge,513.0,u
+50,Electroménager,Petit,Lave-vaiselle,461.0,u
+51,Electroménager,Gros,Micro-onde,121.0,u
+52,Electroménager,Gros,Aspirateur,73.4,u
