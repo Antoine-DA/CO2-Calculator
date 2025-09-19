@@ -101,5 +101,7 @@ with st.expander("""❓ Quelles sources ont été utilisées ?"""):
 #endregion
 
 st.markdown("## 💡 Vos suggestions")
-google_form="https://docs.google.com/forms/d/e/1FAIpQLSft_3YHclgWRMMWhjP3pHQAAujZ9JdtmN3_dqbI6PLWR4L8rw/viewform?embedded=true"
-st.components.v1.iframe(google_form, height=600)
+activated= st.checkbox("✍️ Laissez un avis")
+if activated :    
+    google_form="https://docs.google.com/forms/d/e/1FAIpQLSft_3YHclgWRMMWhjP3pHQAAujZ9JdtmN3_dqbI6PLWR4L8rw/viewform?embedded=true"
+    st.components.v1.iframe(google_form, height=600)
