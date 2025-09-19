@@ -76,3 +76,47 @@ def Navbar():
         st.page_link('streamlit_app.py', label='Présentation', icon='👋')
         st.page_link('pages/1_calculator.py', label='Calculateur', icon='🧮')
         st.page_link('pages/2_to_go_further.py', label = "Pour aller plus loin", icon='📚')
+
+def card_grid(main_title, items, values, tooltips):
+    cards_html = ""
+    for item, value, tooltip in zip(items, values, tooltips):
+        cards_html += f"""
+    <div
+        class="flex flex-col justify-center bg-gray-100 px-6 py-3 rounded-xl shadow-md w-56 card-hover relative overflow-visible">
+        <div class="text-4xl font-extrabold text-gray-900">{value}</div>
+        <div class="mt-2 text-lg font-medium text-gray-600 flex items-center justify-center gap-2">
+            {item}
+        <span class="absolute group top-1 right-3">
+            <span
+                class="inline-block w-5 h-5 rounded-full bg-gray-300 text-gray-900 text-sm font-bold cursor-pointer">?</span>
+            <span
+                class="absolute -top-12 left-1/2 -translate-x-1/2 w-40 p-2 text-sm text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition">{tooltip}
+            </span>
+        </span>
+        </div>
+    </div>
+        """
+
+    full_html = f"""
+    <style>
+    .card-hover {{
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }}
+    .card-hover:hover {{
+        transform: scale(1.05);
+        background: linear-gradient(145deg, #4CAF50);
+        box-shadow: 0 5px 5px rgba(0,0,0,0.15);
+    }}
+    </style>
+    <div class="bg-white py-16">
+      <div class="mx-auto max-w-4xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+          {main_title}
+        </h2>
+      </div>
+      <div class="mt-12 flex flex-wrap justify-center gap-4 text-center">
+        {cards_html}
+      </div>
+    </div>
+    """
+    st.markdown(full_html, unsafe_allow_html=True)

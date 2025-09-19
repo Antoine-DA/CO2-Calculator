@@ -64,6 +64,8 @@ Cette application a été développée avec les technologies et bibliothèques P
 - **Math** – calculs géographiques et trigonométriques (distance, coordonnées)  
 """)
 
-st.subheader("💡 Vos suggestions")
-google_form="https://docs.google.com/forms/d/e/1FAIpQLSft_3YHclgWRMMWhjP3pHQAAujZ9JdtmN3_dqbI6PLWR4L8rw/viewform?embedded=true"
-st.components.v1.iframe(google_form, height=600)
+st.markdown("## 💡 Vos suggestions")
+activated= st.checkbox("✍️ Laissez un avis")
+if activated :    
+    google_form="https://docs.google.com/forms/d/e/1FAIpQLSft_3YHclgWRMMWhjP3pHQAAujZ9JdtmN3_dqbI6PLWR4L8rw/viewform?embedded=true"
+    st.components.v1.iframe(google_form, height=600)

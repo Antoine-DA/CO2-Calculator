@@ -1,7 +1,9 @@
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
-from utils import load_data,haversine,distance_ajust,co2_result, sidebar_contact, Navbar
+from utils import load_data,haversine,distance_ajust,co2_result, sidebar_contact, Navbar, card_grid
+from streamlit_searchbox import st_searchbox
+
 
 def main():
     Navbar()
@@ -10,13 +12,20 @@ if __name__ == '__main__':
 
 st.set_page_config(
     page_title="Calculateur CO2 ",  # titre de l'onglet navigateur
-    page_icon="✈️")
+    page_icon="✈️",
+    layout="centered")
 
+#Chargement du sommaire
 sidebar_contact()
+
+#Chargement Tailwind
+tailwind_cdn = """<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">"""
+st.markdown(tailwind_cdn, unsafe_allow_html=True)
 
 
 #region Chargement data
 df_ap = load_data("df_ap.csv") #liste des aéroports
+df_ap= df_ap.sort_values(by="score", ascending = False)
 aeroports = df_ap['full_text']
 df = load_data("df_items.csv") #liste des items pour le sunburst
 
@@ -28,7 +37,7 @@ pourcentage = [0.24,0.22,0.23,0.12,0.11,0.08]
 montant = [i*9400 for i in pourcentage]
 #endregion
 
-
+#Titre de la section
 st.markdown("""
 <div style="background-color:#4CAF50; padding:15px; border-radius:10px">
     <h1 style="color:white; text-align:center;">🌍 Calculateur d'empreinte carbone</h1>
@@ -40,18 +49,17 @@ st.markdown("""
 st.divider()
 
 #region depart
-user_input = st.text_input("Recherchez un aéroport (Ville, Pays, code IATA) :")
+def search_airports(searchterm: str): # Fonction filtrage et tri dynamique
+    if not searchterm:
+        return []
+    filtered = df_ap[df_ap["full_text"].str.contains(searchterm, case=False, na=False)]
+    return filtered["full_text"].head(10).tolist()  # limite à 10 suggestions
 
-# Filtrage et tri dynamique
-if user_input:
-    filtered_df = df_ap[df_ap["full_text"].str.contains(user_input, case=False, na=False)]
-    filtered_df = filtered_df.sort_values(by="score", ascending=False)  # Trier après filtrage
-    filtered_options = filtered_df["full_text"].tolist()
-    filtered_options.insert(0, "")  # Insert un élément vide en première position
-else:
-    filtered_options = df_ap.sort_values(by="score", ascending=False)["full_text"].tolist()
-
-depart = st.selectbox("Sélectionnez un aéroport :", options=filtered_options,key="depart_selectbox")
+depart = st_searchbox(
+    search_airports,
+    key="depart",
+    placeholder="D'où partez-vous ?",
+    label="Recherchez un aéroport (Ville, Pays, code IATA) :")   
 #endregion
 
 st.divider()
@@ -59,32 +67,24 @@ st.divider()
 #region escale
 activated = st.checkbox("Voyage avec Escale")    
 if activated :
-    user_input = st.text_input("Recherchez un aéroport d'escale :")
-
-    # Filtrage et tri dynamique
-    if user_input:
-        filtered_df = df_ap[df_ap["full_text"].str.contains(user_input, case=False, na=False)]
-        filtered_df = filtered_df.sort_values(by="score", ascending=False)  # Trier après filtrage
-        filtered_options = filtered_df["full_text"].tolist()
-    else:
-        filtered_options = df_ap.sort_values(by="score", ascending=False)["full_text"].tolist()
-
-    escale = st.selectbox("Sélectionnez un aéroport :", options=filtered_options,key="escale_selectbox")
+    escale = st_searchbox(
+        search_airports,
+        key="escale",
+        placeholder="Recherchez un aéroport d'escale...",
+        label="Aéroport d'escale")
 #endregion
+
 st.divider()
 
 #region arrivee
-user_input = st.text_input("Recherchez un aéroport :")
-if user_input:
-    filtered_df = df_ap[df_ap["full_text"].str.contains(user_input, case=False, na=False)]
-    filtered_df = filtered_df.sort_values(by="score", ascending=False)  # Trier après filtrage
-    filtered_options = filtered_df["full_text"].tolist()
-else:
-    filtered_options = df_ap.sort_values(by="score", ascending=False)["full_text"].tolist()
-
-arrivee = st.selectbox("Sélectionnez un aéroport :", options=filtered_options,key="arrivee_selectbox")
+arrivee = st_searchbox(
+    search_airports,
+    key="arrivee",
+    placeholder="Où arrivez-vous ?",
+    label="Recherchez un aéroport (Ville, Pays, code IATA) :")
 #endregion
 
+#region Calcul des résultats
 if st.button("Calculer"):
     latdep = df_ap.loc[df_ap['full_text']==depart,"latitude_deg"].values[0]
     longdep = df_ap.loc[df_ap['full_text']==depart,"longitude_deg"].values[0]
@@ -94,7 +94,6 @@ if st.button("Calculer"):
     latarr = df_ap.loc[df_ap['full_text']==arrivee,"latitude_deg"].values[0]
     longarr = df_ap.loc[df_ap['full_text']==arrivee,"longitude_deg"].values[0]
 
-    #region Calcul des résultats
     if activated: 
         voyage1 = haversine(latdep,longdep,latesc,longesc)
         voyage2 = haversine(latesc,longesc,latarr,longarr)
@@ -113,34 +112,29 @@ if st.button("Calculer"):
     st.session_state["co2_aller"] = co2_aller
     st.session_state["co2_retour"] = co2_retour
 
-    #endregion
+#endregion
     
+    #Affichage de l'itinéraire    
     if "co2_retour" in st.session_state:
-        # Récupérer la ville de départ
         ville_depart = df_ap.loc[df_ap["full_text"] == depart, "municipality"].values
         ville_depart = ville_depart[0] if len(ville_depart) > 0 else "Non défini"
-
-        # Récupérer la ville d'escale (si activée)
         if activated:
             ville_escale = df_ap.loc[df_ap["full_text"] == escale, "municipality"].values
             ville_escale = ville_escale[0] if len(ville_escale) > 0 else "Non défini"
         else:
             ville_escale = None
-
-        # Récupérer la ville d'arrivée
         ville_arrivee = df_ap.loc[df_ap["full_text"] == arrivee, "municipality"].values
         ville_arrivee = ville_arrivee[0] if len(ville_arrivee) > 0 else "Non défini"
 
-        # Affichage 
-        st.markdown("### 🗺️ Itinéraire sélectionné :<br>", unsafe_allow_html=True)
+        st.markdown('<h2 class="text-3xl font-bold tracking-tight text-gray-900 text-center">Itinéraire sélectionné :</h2>',unsafe_allow_html=True)
         
         if ville_escale:
             itineraire = f"{ville_depart} ✈️ ➝ {ville_escale} ✈️ ➝ {ville_arrivee}"
         else:
             itineraire=f"{ville_depart} ✈️ ➝ {ville_arrivee}"
         st.markdown(f"<div style='text-align: center; font-size:20px;'>{itineraire}</div>",unsafe_allow_html=True)
-    # region affichage résultat
-            
+
+#region Cards Distance, CO2 Aller, CO2 AR            
     st.markdown(
         f"""
         <style>
@@ -219,91 +213,111 @@ if st.button("Calculer"):
             🔁 Aller-Retour : {co2_retour} kg CO₂
         </div>
         """,
-        unsafe_allow_html=True
-    )
-    #endregion
+        unsafe_allow_html=True)
+#endregion
+
+#region Cards Data
     if "co2_retour" in st.session_state:
-        st.markdown("<h2>Ce trajet en avion équivaut à : </h2>",unsafe_allow_html=True)
-        dist_km = st.session_state["dist_km"]
-        co2_aller = st.session_state["co2_aller"]
-        co2_retour = st.session_state["co2_retour"]
-        col1, col2, col3 = st.columns(3)
-        
+        card_grid("Ce trajet en avion équivaut à :",
+                  ["🥩 Steaks hachés", "🚄 Trajets TGV Paris-Marseille", "👖 Jeans"],
+                  [round(co2_retour/3,ndigits=None),round(co2_retour/1.1,ndigits=None),round(co2_retour/25,ndigits=None)],
+                  ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.1 kg CO₂", "1 jean = 25 kg CO₂"])
+#endregion
 
-        with col1:
-            st.metric("🥩 Steaks hachés", f"{int(co2_retour // 3)}", help="1 steak = 3 kg CO₂", delta_color='inverse')
-
-        with col2:
-            st.metric("🚄 Trajets TGV Paris-Marseille", f"{round(co2_retour / 1.1)}", help="1 AR ≈ 1.1 kg CO₂")
-        
-        with col3:
-            st.metric("👖 Jeans", f"{round(co2_retour/25.1)}", help="1 Jean ≈25kg de CO₂" )
-
-    
-    #region Camembert
+#region Camembert
     if "co2_retour" in st.session_state:
+        
+        st.markdown("""
+        <div class="bg-white py-16">
+            <div class="mx-auto max-w-4xl text-center -mb-10 -mt-20">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+            Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e
+            </h2>
+        </div>""",unsafe_allow_html=True)
         fig = go.Figure()
-
-        #Camembert intérieur
+        # Camembert intérieur
         fig.add_trace(go.Pie(
             labels=poste,
             values=montant,
-            hole=0.45,
+            hole=0.38,
             name="Moyenne française",
             sort=False,
             domain=dict(x=[0.08,0.92], y=[0.08,0.92]),
-            marker=dict(colors = ["#8dd3c7","#fb8072","#ffffb3","#80b1d3","#fdb462","#b3de69"]),
-            textinfo="label+percent"  
+            marker=dict(colors=["#8dd3c7","#fb8072","#ffffb3","#80b1d3","#fdb462","#b3de69"]),
+            textinfo="label+percent",
+            hovertemplate="%{label}<br>%{value:.0f} kg CO₂ eq<br>(%{percent})<extra></extra>"
         ))
 
-        # Camembert extérieur
+        # Camembert extérieur (mon voyage vs reste)
         fig.add_trace(go.Pie(
-            labels=["Mon voyage", " "],
+            labels=["Mon voyage", "Reste"],
             values=[co2_retour, sum(montant) - co2_retour],
-            hole=0.90,  # rend le cercle intérieur plus petit
-            name="Mon empreinte",
-            marker=dict(colors=["#fb8072", "#FFFFFF"]),  # couleur perso + gris pour "reste"
-            textinfo="percent"
+            hole=0.88,
+            name = "Mon voyage",
+            marker=dict(colors=["#fb8072", "#FFFFFF"],line=dict(color="gray", width=[1,0])),
+            text=["Mon voyage {:.1f}%".format(co2_retour/sum(montant)*100), ""],  # texte seulement pour "Mon voyage"
+            textinfo="text",
+            textposition="inside",
+            hovertemplate=[f"✈️ Mon voyage<br>{co2_retour:.0f} kg CO₂ eq<br>({round(co2_retour/sum(montant)*100,1)}%)<extra></extra>", "<extra></extra>"],
+            
         ))
 
         # Mise en forme
         fig.update_layout(
-            title="Comparaison empreinte carbone moyenne d'un.e français.e",
-            
-            showlegend=True,
-            width=900,
-            height=700   
-            )
-        
-        
+            showlegend=False,
+            width=700,
+            height=700,
+            margin=dict(t=0, b=0, l=0, r=0)
+        )
+
+        # Annotation centrale
         fig.add_annotation(
-            text= "👤*",
-            x = 0.5, y=0.5,
-            font = dict(size = 48, color = "black"),
+            text="👤*",
+            x=0.5, y=0.5,
+            font=dict(size=48, color="black"),
             showarrow=False
         )
-        fig.add_annotation(
-            text="*Un.e français.e consomme en moyenne 9,4 tonnes de CO₂ eq sur l'année 2023 - INSEE",
-            x=0.0001,y=0.0001,
-            font = dict(size = 12, color = "black"),
-            showarrow=False)
 
-        st.plotly_chart(fig)
-        
-        #interprétation
-        st.markdown(f"Avec ce graphique, on comprend que ce seul voyage représente :blue-background[**{round(co2_retour/9400*100,1)}%** de l'empreinte carbone annuel] d'un.e français.e, dont :blue-background[**{round(co2_retour/2156*100,1)}%** de l'ensemble des déplacements annuels].")
-        #endregion
-        
+        # Source en bas
+        fig.add_annotation(
+            text="*Un.e français.e consomme en moyenne 9,4 tCO₂ eq en 2023 - INSEE",
+            x=0.5, y=0.01,  # placé dans la zone visible
+            xref="paper", yref="paper",
+            font=dict(size=12, color="black"),
+            showarrow=False
+        )
+
+
+        # Affichage Streamlit
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Interprétation
+        st.markdown(
+            f"Avec ce graphique, on comprend que ce seul voyage représente "
+            f":blue-background[**{round(co2_retour/9400*100,1)}%** de l'empreinte carbone annuel] "
+            f"d'un.e français.e, dont :blue-background[**{round(co2_retour/2156*100,1)}%** "
+            f"de l'ensemble des déplacements annuels]."
+        )
+        st.divider()
         #region Sunburst
         if "co2_retour" in st.session_state:
+            
+            
+            
             df['result'] = [round(co2_retour/i,0) for i in df['CO2']] 
-
+            st.markdown("""
+        <div class="bg-white py-16">
+            <div class="mx-auto max-w-4xl text-center -mb-10 -mt-20">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+            Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e
+            </h2>
+        </div>""",unsafe_allow_html=True)
             fig = px.sunburst(df, 
                             path=["cat", "subcat","Label"],
                             color= 'cat', branchvalues="total", maxdepth=2, color_discrete_sequence=["#8dd3c7", "#fb8072", "#ffffb3", "#80b1d3", "#fdb462", "#b3de69"])
             fig.update_layout(width=900,
                             height=700,
-                            title = "Comparaison de votre voyage avec d'autres postes de consommation"
+                            margin=dict(t=0,b=0,l=0,r=0)
                             )
 
 
@@ -316,14 +330,14 @@ if st.button("Calculer"):
                 label_to_val_unit = {row["Label"]: (row["result"], row["unité"]) for i, row in df.iterrows()}
 
                 custom_text = []
-                for l, p in zip(labels, parents):
-                    if l in df["cat"].unique() or l in df["subcat"].unique():
+                for o, p in zip(labels, parents):
+                    if o in df["cat"].unique() or o in df["subcat"].unique():
                         # catégorie ou sous-catégorie : juste le label
-                        custom_text.append(l)
+                        custom_text.append(o)
                     else:
                         # feuille : label + valeur + unité
-                        val, unit = label_to_val_unit[l]
-                        custom_text.append(f"{l}<br>{val} {unit}")
+                        val, unit = label_to_val_unit[o]
+                        custom_text.append(f"{o}<br>{val} {unit}")
 
                 trace.text = custom_text
                 trace.textinfo = "text"
