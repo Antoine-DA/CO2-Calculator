@@ -1,0 +1,322 @@
+.st-key-calcul_button {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-calcul_button .stButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-calcul_button button {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    display: flex;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    font: bold;
+}
+.st-key-calcul_button button:hover {
+    background-color: #388e3c; 
+    color: white;
+}
+
+div[class*='st-key-depart'] {
+    margin-bottom: 20px;
+}
+
+.st-key-toggle_escale {
+    width: 100%;
+    display: flex;
+}
+.st-key-toggle_escale .stToggle {
+    width: 100%;
+    display: flex;
+    color: #4CAF50;
+
+}
+
+div[class*='st-key-container_escale_'] {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    flex-flow: nowrap;
+    flex: 1 1 0%;
+    -webkit-box-align: start;
+    -webkit-box-pack: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+
+div[class*='st-key-escale_delete'] button {  
+    position: relative; 
+    flex: 1;
+    color: #be0707;
+    top: 32px;
+}
+
+div[class*='st-key-escale_delete'] button:hover {    
+    background-color: #d3d3d3;
+}
+
+div[class*='st-key-escale_add']  {  
+    width: 250px;
+    color : #4CAF50;
+    max-width: 100%;
+    margin: auto;    
+}
+
+div[class*='st-key-escale_add'] button:hover {    
+    background-color: #d3d3d3;
+}
+
+div[class*='st-key-arr'] {
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* --- Conteneur horizontal des cartes --- */
+.result-cards {
+  display: flex;
+  flex-wrap: wrap; /* permet de passer à la ligne */
+  justify-content: center;
+  align-items: stretch; /* même hauteur entre les cards */
+  gap: 1.25rem; /* espacement entre les cards */
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Style commun des cards */
+.result-card {
+  flex: 1 1 320px; /* largeur min 320px, s'adapte sinon */
+  background-color: #f5f5f5;
+  border: 2px solid #d1d5db;
+  border-radius: 0.75rem;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #374151;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px; /* garantit une taille homogène sans la figer */
+  box-sizing: border-box;
+}
+
+.result-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Bloc principal (aller-retour) --- */
+.result-summary {
+  background-color: #DBEAFE; /* bg-blue-100 */
+  border: 4px solid #60A5FA; /* border-blue-400 */
+  border-radius: 1rem; /* rounded-2xl */
+  padding: 2.5rem; /* px-10 py-10 */
+  margin: 1rem auto;
+  text-align: center;
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  color: #111827; /* text-gray-900 */
+  max-width: 40rem; /* max-w-xl */
+  animation: fadeIn 1s ease-in-out;
+}
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+
+}
+
+/* --- Style de chaque card --- */
+.card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+    justify-content: flex-start;
+    border: 2px solid #d1d5db;
+    border-radius: 0.75rem;
+    background-color: #f5f5f5; /* équivalent bg-gray-100 */
+    transition: transform 0.3s ease, box-shadow 0.1s ease, background 0.3s ease;
+    padding: 0.5rem 1.5rem;
+    width: 14rem; /* default width */
+    position: relative;
+    overflow: visible;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1)
+}
+
+
+/* --- Valeur principale (grande) --- */
+.card-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* --- Titre de la card --- */
+.card-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+/* --- Tooltip amélioré --- */
+.tooltip {
+    position: absolute;
+    top: -2.5rem;
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #111827;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.tooltip-trigger {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background-color: #d1d5db;
+    color: #111827;
+    font-weight: bold;
+    width: 1.25rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tooltip-trigger:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.tooltip-trigger:hover + .tooltip {
+    opacity: 1;
+}
+
+/* --- Animation d'apparition --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsive : 2 lignes sur mobile --- */
+@media (max-width: 768px) {
+    .card {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .card {
+        width: 100%; /* prend toute la largeur disponible */
+        max-width: 20rem;
+    }
+}
+
+.st-key-add_journey_button, 
+.st-key-reset_journey_button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-add_journey_button .stButton,
+.st-key-reset_journey_button .stButton {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-add_journey_button button,
+.st-key-reset_journey_button button {
+    background-color: #455A64;
+    color: white;
+    text-align: center;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font: bold;
+}
+.st-key-add_journey_button button:hover,
+.st-key-reset_journey_button button:hover {
+    background-color: #2b383f; 
+    color: white;
+}
+
+.st-key-bilan_button,
+.st-key-generate_pdf_button,
+.st-key-download_pdf_button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-bilan_button .stButton,
+.st-key-generate_pdf_button .stButton,
+.st-key-download_pdf_button .stButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.st-key-bilan_button button,
+.st-key-generate_pdf_button button,
+.st-key-download_pdf_button button {
+    background-color: #455A64;
+    color: white;
+    text-align: center;
+    display: flex;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    font: bold;
+}
+.st-key-bilan_button button:hover,
+.st-key-generate_pdf_button button:hover,
+.st-key-download_pdf_button button:hover {
+    background-color: #2b383f; 
+    color: white;
+}
