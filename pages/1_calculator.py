@@ -360,18 +360,14 @@ if len(st.session_state["all_journeys"]) >= 2 and st.session_state["show_bilan"]
 
     st.markdown(
         f"""
-        <div class="flex flex-wrap justify-center gap-5 mt-8 mb-2 animate-fadeIn">
-            <div class="bg-gray-100 border-2 border-gray-300 rounded-xl px-8 py-6 min-w-[280px] text-center text-2xl font-bold text-gray-800 transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-                🔢 Nombre de trajets : {len(st.session_state["all_journeys"])}
-            </div>
-            <div class="bg-gray-100 border-2 border-gray-300 rounded-xl px-8 py-6 min-w-[280px] text-center text-2xl font-bold text-gray-800 transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-                🌍 CO₂ cumulé : {total_co2} kg
-            </div>
+        <div class="result-cards animate-fadeIn">
+            <div class="result-card">🔢 Nombre de trajets : {len(st.session_state["all_journeys"])}</div>
+            <div class="result-card">🌍 CO₂ cumulé : {total_co2} kg</div>
         </div>
         """,
         unsafe_allow_html=True
     )
-
+    
     card_grid("Ces trajets en avion équivalent à :",
             ["🥩 Steaks hachés", "🚄 Trajets TGV Paris-Marseille", "👖 Jeans"],
             [round(total_co2/3), round(total_co2/1.1), round(total_co2/25)],
