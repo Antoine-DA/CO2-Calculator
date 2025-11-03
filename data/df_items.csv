@@ -48,7 +48,7 @@
 46,Transport,En commun,Métro,0.0044,km
 47,Transport,Individuel,Trotinette électrique,0.0249,km
 48,Transport,Individuel,Voiture électrique,0.103,km
-49,Electroménager,Petit,Lave-linge,513.0,u
-50,Electroménager,Petit,Lave-vaiselle,461.0,u
-51,Electroménager,Gros,Micro-onde,121.0,u
-52,Electroménager,Gros,Aspirateur,73.4,u
+49,Electroménager,Gros,Lave-linge,513.0,u
+50,Electroménager,Gros,Lave-vaiselle,461.0,u
+51,Electroménager,Petit,Micro-onde,121.0,u
+52,Electroménager,Petit,Aspirateur,73.4,u
