@@ -161,7 +161,7 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
     st.session_state["co2_total"] = co2_total
     
     st.markdown(
-        """<h2 class="title-h2">Itinéraire sélectionné :</h2>""",
+        """<h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">Itinéraire sélectionné :</h2>""",
         unsafe_allow_html=True,
     )
     itineraire = " ➝ ".join([etape["ville"] for etape in trajet])
@@ -196,7 +196,7 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
 #region Camembert
     if "co2_total" in st.session_state:
         
-        st.markdown("""<h2 class="title-h2">Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e</h2>""",unsafe_allow_html=True)
+        st.markdown("""<h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e</h2>""",unsafe_allow_html=True)
         fig = go.Figure()
         fig.add_trace(go.Pie(
             labels=poste,
@@ -260,8 +260,8 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
         
         df['result'] = [round(co2_total/i,0) for i in df['CO2']] 
         st.markdown("""
-        <h2 class="title-h2">Comparaison de votre vol avec une liste d'items courants</h2>
-        <h3 class="title-h3">(Cliquez sur les différents items pour naviguer dans le graphique)</h3>
+        <h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">Comparaison de votre vol avec une liste d'items courants</h2>
+        <h3 style="text-align:center; font-size:1.2rem; color:#6b7280;">(Cliquez sur les différents items pour naviguer dans le graphique)</h3>
         """,unsafe_allow_html=True)
         fig = px.sunburst(df, 
                         path=["cat", "subcat","Label"],
@@ -346,7 +346,7 @@ if "last_journey" in st.session_state:
 if len(st.session_state["all_journeys"]) >= 2 and st.session_state["show_bilan"]:
     total_co2 = sum(j["co2_total"] for j in st.session_state["all_journeys"])
     st.markdown("---")
-    st.markdown("""<h2 class="title-h2">🌍 Bilan cumulé de vos trajets</h2>""", unsafe_allow_html=True)
+    st.markdown("""<h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">🌍 Bilan cumulé de vos trajets</h2>""", unsafe_allow_html=True)
 
     st.markdown(
         f"""
@@ -363,7 +363,7 @@ if len(st.session_state["all_journeys"]) >= 2 and st.session_state["show_bilan"]
             [round(total_co2/3), round(total_co2/1.1), round(total_co2/25)],
             ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.1 kg CO₂", "1 jean = 25 kg CO₂"])
 
-    st.markdown("""<h2 class="title-h2">Comparaison de vos vols cumulés avec l'empreinte carbone moyenne d'un.e français.e</h2>"""
+    st.markdown("""<h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">Comparaison de vos vols cumulés avec l'empreinte carbone moyenne d'un.e français.e</h2>"""
     ,unsafe_allow_html=True)
     
     fig = go.Figure()
