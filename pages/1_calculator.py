@@ -197,13 +197,7 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
 #region Camembert
     if "co2_total" in st.session_state:
         
-        st.markdown("""
-        <div class="bg-white py-16">
-            <div class="mx-auto max-w-4xl text-center -mb-10 -mt-20">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
-            Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e
-            </h2>
-        </div>""",unsafe_allow_html=True)
+        st.markdown("##Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e",unsafe_allow_html=True)
         fig = go.Figure()
         fig.add_trace(go.Pie(
             labels=poste,
@@ -267,12 +261,9 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
         
         df['result'] = [round(co2_total/i,0) for i in df['CO2']] 
         st.markdown("""
-    <div class="bg-white py-16">
-        <div class="mx-auto max-w-4xl text-center -mb-10 -mt-20">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">
-        Comparaison de votre vol avec l'empreinte carbone moyenne d'un.e français.e
-        </h2>
-    </div>""",unsafe_allow_html=True)
+        <h2>Comparaison de votre vol avec une liste d'items courants</h2>
+        <h3>(Cliquez sur les différents items pour naviguer dans le graphique)</h3>
+        """,unsafe_allow_html=True)
         fig = px.sunburst(df, 
                         path=["cat", "subcat","Label"],
                         color= 'cat', branchvalues="total", maxdepth=2, color_discrete_sequence=["#8dd3c7", "#fb8072", "#ffffb3", "#80b1d3", "#fdb462", "#b3de69"])
@@ -373,13 +364,9 @@ if len(st.session_state["all_journeys"]) >= 2 and st.session_state["show_bilan"]
             [round(total_co2/3), round(total_co2/1.1), round(total_co2/25)],
             ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.1 kg CO₂", "1 jean = 25 kg CO₂"])
 
-    st.markdown("""
-    <div class="bg-white py-16">
-        <div class="mx-auto max-w-4xl text-center -mb-10 -mt-20">
-        <h2 class="text-3xl font-bold tracking-tight text-gray-900">
-        Comparaison de vos vols cumulés avec l'empreinte carbone moyenne d'un.e français.e
-        </h2>
-    </div>""",unsafe_allow_html=True)
+    st.markdown("##Comparaison de vos vols cumulés avec l'empreinte carbone moyenne d'un.e français.e"
+    ,unsafe_allow_html=True)
+    
     fig = go.Figure()
     fig.add_trace(go.Pie(
         labels=poste,
