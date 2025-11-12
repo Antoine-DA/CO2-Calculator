@@ -189,8 +189,8 @@ if st.button("Calculer", key='calcul_button', icon=":material/calculate:"):
     if "co2_total" in st.session_state:
         card_grid("Ce trajet en avion équivaut à :",
                   ["🥩 Steaks hachés", "🚄 Trajets TGV Paris-Marseille", "👖 Jeans"],
-                  [round(co2_total/3,ndigits=None),round(co2_total/1.1,ndigits=None),round(co2_total/25,ndigits=None)],
-                  ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.1 kg CO₂", "1 jean = 25 kg CO₂"])
+                  [round(co2_total/3,ndigits=None),round(co2_total/1.71,ndigits=None),round(co2_total/25,ndigits=None)],
+                  ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.71 kg CO₂", "1 jean = 25 kg CO₂"])
 #endregion
 
 #region Camembert
@@ -360,8 +360,8 @@ if len(st.session_state["all_journeys"]) >= 2 and st.session_state["show_bilan"]
     
     card_grid("Ces trajets en avion équivalent à :",
             ["🥩 Steaks hachés", "🚄 Trajets TGV Paris-Marseille", "👖 Jeans"],
-            [round(total_co2/3), round(total_co2/1.1), round(total_co2/25)],
-            ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.1 kg CO₂", "1 jean = 25 kg CO₂"])
+            [round(total_co2/3), round(total_co2/1.71), round(total_co2/25)],
+            ["1 steak = 3 kg CO₂", "1 trajet ≈ 1.71 kg CO₂", "1 jean = 25 kg CO₂"])
 
     st.markdown("""<h2 style="text-align:center; font-size:2rem; font-weight:bold; color:#111827;">Comparaison de vos vols cumulés avec l'empreinte carbone moyenne d'un.e français.e</h2>"""
     ,unsafe_allow_html=True)
