@@ -15,14 +15,27 @@ def Navbar():
         st.page_link('pages/2_to_go_further.py', label = "Pour aller plus loin", icon='📚')
     
 def sidebar_contact():
-    st.sidebar.title("Contact :")
-    contact = [
-        "Antoine BARBIER",
+    st.sidebar.title("Contact : ")
+    contact = ["Antoine BARBIER",
         "https://github.com/Antoine-DA",
         "https://www.linkedin.com/in/antoine-barbier-83654415b/",
         "mailto:antoine.barbier.pro@gmail.com"
     ]
-
+    st.sidebar.markdown(f"""
+        <div style="display: flex; align-items: center; margin-bottom: 10px;" class="contact-icons">
+            <div style="flex: 1;">{contact[0]}</div>
+            <a href="{contact[1]}" target="_blank" style="margin-right: 12px;">
+                <img src="https://cdn-icons-png.flaticon.com/32/25/25231.png" width="20" alt="GitHub">
+            </a>
+            <a href="{contact[2]}" target="_blank" style="margin-right: 12px;">
+                <img src="https://cdn-icons-png.flaticon.com/32/174/174857.png" width="20" alt="LinkedIn">
+            </a>
+            <a href="{contact[3]}" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/32/561/561127.png" width="22" alt="Email">
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
+        
 def load_data(filename):
     BASE_DIR = Path(__file__).resolve().parent
     return pd.read_csv(BASE_DIR / "data" / filename)
